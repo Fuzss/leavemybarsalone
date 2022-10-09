@@ -60,11 +60,15 @@ public class LeaveMyBarsAloneForgeClient {
 
     @SubscribeEvent
     public static void onClientSetup(final FMLClientSetupEvent evt) {
-        MinecraftForge.EVENT_BUS.addListener((final RenderGuiOverlayEvent.Pre evt1) -> {
+        registerHandlers();
+    }
+
+    private static void registerHandlers() {
+        MinecraftForge.EVENT_BUS.addListener((final RenderGuiOverlayEvent.Pre evt) -> {
             // not sure if transparency could be an issue here (possibly with resource packs if vanilla doesn't have it?),
             // so cancel this to be safe
             if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).experienceBar) return;
-            if (evt1.getOverlay() == VanillaGuiOverlay.JUMP_BAR.type()) {
+            if (evt.getOverlay() == VanillaGuiOverlay.JUMP_BAR.type()) {
                 Minecraft minecraft = Minecraft.getInstance();
                 if (minecraft.player.getJumpRidingScale() == 0.0F) {
                     evt.setCanceled(true);
