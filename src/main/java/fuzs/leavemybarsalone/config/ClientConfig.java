@@ -1,4 +1,4 @@
-package fuzs.improvedmounthud.config;
+package fuzs.leavemybarsalone.config;
 
 import fuzs.puzzleslib.config.AbstractConfig;
 import fuzs.puzzleslib.config.annotation.Config;

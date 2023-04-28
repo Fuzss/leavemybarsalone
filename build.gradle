@@ -75,7 +75,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:catalogue-459701:3543625")
     runtimeOnly fg.deobf("curse.maven:bettermodsbutton-541584:3548185")
     runtimeOnly fg.deobf("curse.maven:configmenusforge-544048:3548199")
-    implementation fg.deobf("curse.maven:appleskin-248787:3626712")
+    implementation fg.deobf("curse.maven:appleskin-248787:3927564")
 
     // from local maven, those builds are not obfuscated
     implementation fg.deobf("fuzs.puzzleslib:PuzzlesLib:${puzzlesVersion}")
@@ -226,9 +226,13 @@ curseforge {
         releaseType = project.findProperty('curseReleaseType')
         addGameVersion project.findProperty('projectLoader')
         project.findProperty('curseProjectVersion').replaceAll(" ", "").split(",").each { version -> addGameVersion version }
-        mainArtifact jar
-        addArtifact sourceJar
-        relations { requiredDependency 'puzzles-lib' }
+        mainArtifact(jar) {
+            displayName = "[FORGE] [${minecraftVersion}] ${rootProject.name}-v${modVersion}"
+            relations {
+                requiredDependency 'puzzles-lib'
+            }
+        }
+//        addArtifact sourcesJar
     }
     options {
         // doesn't upload, only prints json to console

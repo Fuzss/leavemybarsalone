@@ -1,6 +1,6 @@
-package fuzs.improvedmounthud;
+package fuzs.leavemybarsalone;
 
-import fuzs.improvedmounthud.config.ClientConfig;
+import fuzs.leavemybarsalone.config.ClientConfig;
 import fuzs.puzzleslib.PuzzlesLib;
 import fuzs.puzzleslib.config.AbstractConfig;
 import fuzs.puzzleslib.config.ConfigHolder;
@@ -11,11 +11,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Mod(ImprovedMountHUD.MOD_ID)
+@Mod(LeaveMyBarsAlone.MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ImprovedMountHUD {
-    public static final String MOD_ID = "improvedmounthud";
-    public static final String MOD_NAME = "Improved Mount HUD";
+public class LeaveMyBarsAlone {
+    public static final String MOD_ID = "leavemybarsalone";
+    public static final String MOD_NAME = "Leave My Bars Alone";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
     @SuppressWarnings("Convert2MethodRef")
