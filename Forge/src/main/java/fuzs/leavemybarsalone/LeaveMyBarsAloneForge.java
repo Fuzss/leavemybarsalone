@@ -1,6 +1,6 @@
 package fuzs.leavemybarsalone;
 
-import fuzs.puzzleslib.core.CoreServices;
+import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -11,6 +11,6 @@ public class LeaveMyBarsAloneForge {
 
     @SubscribeEvent
     public static void onConstructMod(final FMLConstructModEvent evt) {
-        CoreServices.FACTORIES.modConstructor(LeaveMyBarsAlone.MOD_ID).accept(new LeaveMyBarsAlone());
+        ModConstructor.construct(LeaveMyBarsAlone.MOD_ID, LeaveMyBarsAlone::new);
     }
 }

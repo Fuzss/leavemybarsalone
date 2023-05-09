@@ -10,6 +10,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.spongepowered.asm.mixin.Final;
@@ -29,7 +30,7 @@ abstract class GuiMixin extends GuiComponent {
     private Minecraft minecraft;
 
     @Inject(method = "renderPlayerHealth", at = @At("HEAD"))
-    private void leavemybarsalone$renderPlayerHealth$0(PoseStack poseStack, CallbackInfo callback) {
+    private void renderPlayerHealth$0(PoseStack poseStack, CallbackInfo callback) {
         Player player = this.getCameraPlayer();
         if (player != null) {
             FabricLoader.getInstance().getObjectShare().put(SharedGuiHeights.OBJECT_SHARE_RIGHT_HEIGHT_KEY, new MutableInt(39 + this.overflowingBars$getAdditionalRightHeight(player)));
@@ -63,13 +64,12 @@ abstract class GuiMixin extends GuiComponent {
     }
 
     @ModifyVariable(method = "renderPlayerHealth", at = @At("STORE"), ordinal = 13, slice = @Slice(from = @At(value = "CONSTANT", args = "stringValue=health"), to = @At(value = "CONSTANT", args = "stringValue=food")))
-    private int leavemybarsalone$renderPlayerHealth$1(int vehicleMaxHearts) {
-        if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).foodBar) return vehicleMaxHearts;
-        return 0;
+    private int renderPlayerHealth$1(int vehicleMaxHearts) {
+        return !LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).foodBar ? vehicleMaxHearts : 0;
     }
 
     @ModifyVariable(method = "renderPlayerHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getMaxAirSupply()I"), ordinal = 13)
-    private int leavemybarsalone$renderPlayerHealth$2(int vehicleMaxHearts) {
+    private int renderPlayerHealth$2(int vehicleMaxHearts) {
         if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).foodBar) return vehicleMaxHearts;
         LivingEntity livingentity = this.getPlayerVehicleWithHealth();
         return this.getVehicleMaxHearts(livingentity);
@@ -86,7 +86,7 @@ abstract class GuiMixin extends GuiComponent {
     }
 
     @ModifyVariable(method = "renderVehicleHealth", at = @At("STORE"), ordinal = 2)
-    private int leavemybarsalone$renderVehicleHealth(int leftHeight) {
+    private int renderVehicleHealth(int leftHeight) {
         if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).foodBar) return leftHeight;
         if (this.minecraft.gameMode.canHurtPlayer()) {
             return leftHeight - 10;
@@ -96,9 +96,9 @@ abstract class GuiMixin extends GuiComponent {
     }
 
     @Inject(method = "renderJumpMeter", at = @At("HEAD"), cancellable = true)
-    public void leavemybarsalone$renderJumpMeter(PoseStack poseStack, int x, CallbackInfo callback) {
+    public void renderJumpMeter(PlayerRideableJumping rideable, PoseStack poseStack, int x, CallbackInfo callback) {
         if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).experienceBar) return;
-        if (this.minecraft.gameMode.hasExperience() && this.minecraft.player.getJumpRidingScale() == 0.0F) {
+        if (this.minecraft.gameMode.hasExperience() && this.minecraft.player.getJumpRidingScale() == 0.0F && rideable.getJumpCooldown() == 0.0F) {
             this.renderExperienceBar(poseStack, x);
             callback.cancel();
         }

@@ -1,12 +1,12 @@
 package fuzs.leavemybarsalone;
 
-import fuzs.puzzleslib.core.CoreServices;
+import fuzs.puzzleslib.api.core.v1.ModConstructor;
 import net.fabricmc.api.ModInitializer;
 
 public class LeaveMyBarsAloneFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CoreServices.FACTORIES.modConstructor(LeaveMyBarsAlone.MOD_ID).accept(new LeaveMyBarsAlone());
+        ModConstructor.construct(LeaveMyBarsAlone.MOD_ID, LeaveMyBarsAlone::new);
     }
 }
