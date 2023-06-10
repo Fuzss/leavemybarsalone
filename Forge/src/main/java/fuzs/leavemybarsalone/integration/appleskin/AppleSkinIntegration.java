@@ -9,7 +9,6 @@ import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.common.MinecraftForge;
-import squeek.appleskin.client.HUDOverlayHandler;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -26,8 +25,9 @@ public class AppleSkinIntegration {
             Class<?> renderOverlayTypeClazz = Class.forName("squeek.appleskin.client.HUDOverlayHandler$RenderOverlayType");
             MethodType renderExhaustionType = MethodType.methodType(void.class, ForgeGui.class, PoseStack.class, float.class, int.class, int.class);
             MethodType renderFoodOrHealthOverlayType = MethodType.methodType(void.class, ForgeGui.class, PoseStack.class, float.class, int.class, int.class, renderOverlayTypeClazz);
-            renderExhaustionHandle = MethodHandles.publicLookup().findStatic(HUDOverlayHandler.class, "renderExhaustion", renderExhaustionType);
-            renderFoodOrHealthOverlayHandle = MethodHandles.publicLookup().findStatic(HUDOverlayHandler.class, "renderFoodOrHealthOverlay", renderFoodOrHealthOverlayType);
+            Class<?> clazz = Class.forName("squeek.appleskin.client.HUDOverlayHandler");
+            renderExhaustionHandle = MethodHandles.publicLookup().findStatic(clazz, "renderExhaustion", renderExhaustionType);
+            renderFoodOrHealthOverlayHandle = MethodHandles.publicLookup().findStatic(clazz, "renderFoodOrHealthOverlay", renderFoodOrHealthOverlayType);
             Field foodField = renderOverlayTypeClazz.getField("FOOD");
             foodField.setAccessible(true);
             MethodHandle foodGetter = MethodHandles.publicLookup().unreflectGetter(foodField);
@@ -46,7 +46,7 @@ public class AppleSkinIntegration {
             ForgeGui gui = (ForgeGui) minecraft.gui;
             if (minecraft.player.getVehicle() instanceof LivingEntity && !minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
                 try {
-                    methodHandle.invoke(gui, evt.getPoseStack(), evt.getPartialTick(), evt.getWindow().getScreenWidth(), evt.getWindow().getScreenHeight());
+                    methodHandle.invoke(gui, evt.getGuiGraphics(), evt.getPartialTick(), evt.getWindow().getScreenWidth(), evt.getWindow().getScreenHeight());
                 } catch (Throwable e) {
                     LeaveMyBarsAlone.LOGGER.warn("Failed to render Apple Skin exhaustion overlay", e);
                 }
@@ -60,7 +60,7 @@ public class AppleSkinIntegration {
             ForgeGui gui = (ForgeGui) minecraft.gui;
             if (minecraft.player.getVehicle() instanceof LivingEntity && !minecraft.options.hideGui && gui.shouldDrawSurvivalElements()) {
                 try {
-                    methodHandle.invoke(gui, evt.getPoseStack(), evt.getPartialTick(), evt.getWindow().getScreenWidth(), evt.getWindow().getScreenHeight(), foodOverlayType);
+                    methodHandle.invoke(gui, evt.getGuiGraphics(), evt.getPartialTick(), evt.getWindow().getScreenWidth(), evt.getWindow().getScreenHeight(), foodOverlayType);
                 } catch (Throwable e) {
                     LeaveMyBarsAlone.LOGGER.warn("Failed to render Apple Skin food overlay", e);
                 }

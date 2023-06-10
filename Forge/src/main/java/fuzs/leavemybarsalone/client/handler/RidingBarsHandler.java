@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import fuzs.leavemybarsalone.LeaveMyBarsAlone;
 import fuzs.leavemybarsalone.config.ClientConfig;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
@@ -27,7 +26,6 @@ public class RidingBarsHandler {
         final Minecraft minecraft = gui.getMinecraft();
         if (minecraft.player.getJumpRidingScale() == 0.0F && minecraft.player.jumpableVehicle() != null && !minecraft.options.hideGui) {
             gui.setupOverlayRenderState(true, false);
-            RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.disableBlend();
             if (minecraft.gameMode.hasExperience()) {
