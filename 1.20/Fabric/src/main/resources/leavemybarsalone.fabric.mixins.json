@@ -4,10 +4,11 @@
   "compatibilityLevel": "JAVA_17",
   "package": "fuzs.leavemybarsalone.mixin",
   "refmap": "leavemybarsalone.refmap.json",
+  "plugin": "fuzs.leavemybarsalone.mixin.ModMixinConfigPlugin",
   "mixins": [
   ],
   "client": [
-    "client.GuiMixin"
+    "client.GuiFabricMixin"
   ],
   "injectors": {
     "defaultRequire": 1

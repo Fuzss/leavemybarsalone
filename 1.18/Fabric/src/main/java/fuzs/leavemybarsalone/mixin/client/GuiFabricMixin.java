@@ -1,15 +1,14 @@
 package fuzs.leavemybarsalone.mixin.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.leavemybarsalone.LeaveMyBarsAlone;
 import fuzs.leavemybarsalone.api.client.SharedGuiHeights;
 import fuzs.leavemybarsalone.config.ClientConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PlayerRideableJumping;
 import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.spongepowered.asm.mixin.Final;
@@ -23,13 +22,13 @@ import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Gui.class)
-abstract class GuiMixin {
+abstract class GuiFabricMixin {
     @Shadow
     @Final
     private Minecraft minecraft;
 
     @Inject(method = "renderPlayerHealth", at = @At("HEAD"))
-    private void renderPlayerHealth$0(GuiGraphics guiGraphics, CallbackInfo callback) {
+    private void renderPlayerHealth$0(PoseStack poseStack, CallbackInfo callback) {
         Player player = this.getCameraPlayer();
         if (player != null) {
             FabricLoader.getInstance().getObjectShare().put(SharedGuiHeights.OBJECT_SHARE_RIGHT_HEIGHT_KEY, new MutableInt(39 + this.overflowingBars$getAdditionalRightHeight(player)));
@@ -95,14 +94,14 @@ abstract class GuiMixin {
     }
 
     @Inject(method = "renderJumpMeter", at = @At("HEAD"), cancellable = true)
-    public void renderJumpMeter(PlayerRideableJumping rideable, GuiGraphics guiGraphics, int x, CallbackInfo callback) {
+    public void renderJumpMeter(PoseStack poseStack, int x, CallbackInfo callback) {
         if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).experienceBar) return;
-        if (this.minecraft.gameMode.hasExperience() && this.minecraft.player.getJumpRidingScale() == 0.0F && rideable.getJumpCooldown() == 0.0F) {
-            this.renderExperienceBar(guiGraphics, x);
+        if (this.minecraft.gameMode.hasExperience() && this.minecraft.player.getJumpRidingScale() == 0.0F) {
+            this.renderExperienceBar(poseStack, x);
             callback.cancel();
         }
     }
 
     @Shadow
-    public abstract void renderExperienceBar(GuiGraphics guiGraphics, int xPos);
+    public abstract void renderExperienceBar(PoseStack guiGraphics, int xPos);
 }

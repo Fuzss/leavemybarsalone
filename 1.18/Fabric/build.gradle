@@ -19,6 +19,9 @@ dependencies {
     // Extensible Enums
 //    modApi(include(libs.extensibleenums.fabric.get()))
 
+    // AppleSkin
+    modLocalRuntime libs.appleskin.fabric
+
     // Quality of Life Mods
     versionCatalog.findLibrary("modmenu.fabric").ifPresent {
         modLocalRuntime(it)
