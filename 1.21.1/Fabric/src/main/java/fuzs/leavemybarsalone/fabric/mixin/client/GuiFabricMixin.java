@@ -7,10 +7,8 @@ import fuzs.leavemybarsalone.LeaveMyBarsAlone;
 import fuzs.leavemybarsalone.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PlayerRideableJumping;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -87,17 +85,7 @@ abstract class GuiFabricMixin {
     }
 
     @Shadow
-    private Player getCameraPlayer() {
-        throw new RuntimeException();
-    }
-
-    @Shadow
     private LivingEntity getPlayerVehicleWithHealth() {
-        throw new RuntimeException();
-    }
-
-    @Shadow
-    private int getVisibleVehicleHeartRows(int mountHealth) {
         throw new RuntimeException();
     }
 
@@ -105,7 +93,4 @@ abstract class GuiFabricMixin {
     private int getVehicleMaxHearts(LivingEntity mountEntity) {
         throw new RuntimeException();
     }
-
-    @Shadow
-    public abstract void renderExperienceBar(GuiGraphics guiGraphics, int xPos);
 }
