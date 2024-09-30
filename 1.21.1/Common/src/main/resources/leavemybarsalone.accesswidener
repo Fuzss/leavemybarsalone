@@ -1,1 +1,3 @@
 accessWidener   v2  named
+accessible  method   net/minecraft/client/gui/Gui   getPlayerVehicleWithHealth  ()Lnet/minecraft/world/entity/LivingEntity;
+accessible  method   net/minecraft/client/gui/Gui   getVehicleMaxHearts (Lnet/minecraft/world/entity/LivingEntity;)I

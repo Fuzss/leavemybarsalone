@@ -9,6 +9,7 @@ import fuzs.puzzleslib.api.core.v1.ModLoaderEnvironment;
 import fuzs.puzzleslib.api.event.v1.core.EventPhase;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Player;
 
@@ -26,7 +27,11 @@ public class LeaveMyBarsAloneClient implements ClientModConstructor {
                     (Minecraft minecraft, GuiGraphics guiGraphics, DeltaTracker deltaTracker) -> {
                         if (minecraft.getCameraEntity() instanceof Player && LeaveMyBarsAlone.CONFIG.get(
                                 ClientConfig.class).foodBar) {
-                            ClientAbstractions.INSTANCE.addGuiRightHeight(minecraft.gui, 10);
+                            Gui gui = minecraft.gui;
+                            int maxHearts = gui.getVehicleMaxHearts(gui.getPlayerVehicleWithHealth());
+                            if (maxHearts != 0) {
+                                ClientAbstractions.INSTANCE.addGuiRightHeight(gui, 10);
+                            }
                         }
                     }
             );
