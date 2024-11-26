@@ -1,8 +1,6 @@
 package fuzs.leavemybarsalone.fabric.mixin.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import fuzs.leavemybarsalone.LeaveMyBarsAlone;
 import fuzs.leavemybarsalone.config.ClientConfig;
 import net.minecraft.client.Minecraft;
@@ -15,6 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -28,7 +27,8 @@ abstract class GuiFabricMixin {
     private PlayerRideableJumping renderHotbarAndDecorations(@Nullable PlayerRideableJumping playerRideableJumping) {
         if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).experienceBar) {
             return playerRideableJumping;
-        } else if (playerRideableJumping != null && this.minecraft.player.getJumpRidingScale() == 0.0F && this.minecraft.gameMode.hasExperience()) {
+        } else if (playerRideableJumping != null && this.minecraft.player.getJumpRidingScale() == 0.0F &&
+                this.minecraft.gameMode.hasExperience()) {
             return null;
         } else {
             return playerRideableJumping;
@@ -45,11 +45,10 @@ abstract class GuiFabricMixin {
     }
 
     @ModifyExpressionValue(
-            method = "renderPlayerHealth",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/Gui;getVehicleMaxHearts(Lnet/minecraft/world/entity/LivingEntity;)I"
-            )
+            method = "renderPlayerHealth", at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/gui/Gui;getVehicleMaxHearts(Lnet/minecraft/world/entity/LivingEntity;)I"
+    )
     )
     private int renderPlayerHealth(int maxHearts) {
         if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).foodBar) {
@@ -59,16 +58,16 @@ abstract class GuiFabricMixin {
         }
     }
 
-    @WrapOperation(
-            method = "renderPlayerHealth",
+    @ModifyArg(
+            method = "getAirBubbleYLine",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;getVisibleVehicleHeartRows(I)I")
     )
-    private int renderPlayerHealth(Gui gui, int maxHearts, Operation<Integer> operation) {
+    private int getAirBubbleYLine(int vehicleHealth) {
         if (!LeaveMyBarsAlone.CONFIG.get(ClientConfig.class).foodBar) {
-            return operation.call(gui, maxHearts);
+            return vehicleHealth;
         } else {
-            maxHearts = this.getVehicleMaxHearts(this.getPlayerVehicleWithHealth());
-            return operation.call(gui, maxHearts != 0 ? maxHearts + 1 : maxHearts);
+            vehicleHealth = this.getVehicleMaxHearts(this.getPlayerVehicleWithHealth());
+            return vehicleHealth != 0 ? vehicleHealth + 1 : vehicleHealth;
         }
     }
 
