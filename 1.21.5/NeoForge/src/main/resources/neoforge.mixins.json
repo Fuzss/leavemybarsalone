@@ -6,7 +6,6 @@
   "mixins": [
   ],
   "client": [
-    "client.GuiNeoForgeMixin"
   ],
   "injectors": {
     "defaultRequire": 1
