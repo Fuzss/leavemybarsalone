@@ -1,6 +1,2 @@
 accessWidener   v2  named
-transitive-accessible   method   net/minecraft/client/gui/Gui   getPlayerVehicleWithHealth  ()Lnet/minecraft/world/entity/LivingEntity;
-transitive-accessible   method   net/minecraft/client/gui/Gui   getVehicleMaxHearts (Lnet/minecraft/world/entity/LivingEntity;)I
-transitive-accessible   method	net/minecraft/client/gui/Gui	getCameraPlayer	()Lnet/minecraft/world/entity/player/Player;
-accessible	method	net/minecraft/client/gui/Gui	renderExperienceBar	(Lnet/minecraft/client/gui/GuiGraphics;I)V
 accessible	method	net/minecraft/client/gui/Gui	renderFood	(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/entity/player/Player;II)V
