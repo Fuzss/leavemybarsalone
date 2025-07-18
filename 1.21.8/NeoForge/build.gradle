@@ -7,9 +7,3 @@ dependencies {
     // AppleSkin
     modLocalRuntime libs.appleskin.neoforge
 }
-
-tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
-    doFirst {
-        patchLaunchCfg()
-    }
-}
