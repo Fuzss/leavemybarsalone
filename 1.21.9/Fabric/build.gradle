@@ -8,8 +8,8 @@ dependencies {
     modApi libs.puzzleslib.fabric
 
     // Cloth Config
-    modLocalRuntime libs.cloth.fabric
+//    modLocalRuntime libs.cloth.fabric
 
     // AppleSkin
-    modLocalRuntime libs.appleskin.fabric
+//    modLocalRuntime libs.appleskin.fabric
 }
