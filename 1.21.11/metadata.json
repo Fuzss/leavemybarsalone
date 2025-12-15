@@ -1,0 +1,61 @@
+{
+    "mod": {
+        "id": "leavemybarsalone",
+        "group": "fuzs.leavemybarsalone",
+        "name": "Leave My Bars Alone",
+        "version": "21.11.0",
+        "authors": [
+            "Fuzs"
+        ],
+        "description": "Makes your food and experience bars visible when riding on a horse.",
+        "license": "MPL-2.0"
+    },
+    "dependencies": [
+        {
+            "name": "fabricapi",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "forgeconfigapiport",
+            "type": "required",
+            "platforms": [
+                "fabric"
+            ]
+        },
+        {
+            "name": "puzzleslib",
+            "type": "required",
+            "platforms": [
+                "fabric",
+                "neoforge"
+            ]
+        }
+    ],
+    "links": [
+        {
+            "name": "github",
+            "slug": "leavemybarsalone"
+        },
+        {
+            "name": "curseforge",
+            "slug": "leave-my-bars-alone",
+            "id": "281715"
+        },
+        {
+            "name": "modrinth",
+            "slug": "leave-my-bars-alone",
+            "id": "gK9mebQg"
+        }
+    ],
+    "environments": {
+        "client": "required",
+        "server": "unsupported"
+    },
+    "platforms": [
+        "fabric",
+        "neoforge"
+    ]
+}

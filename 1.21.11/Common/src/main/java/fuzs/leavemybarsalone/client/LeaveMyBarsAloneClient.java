@@ -9,11 +9,11 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 public class LeaveMyBarsAloneClient implements ClientModConstructor {
-    public static final ResourceLocation FOOD_LEVEL_GUI_LAYER = LeaveMyBarsAlone.id("food_level");
+    public static final Identifier FOOD_LEVEL_GUI_LAYER = LeaveMyBarsAlone.id("food_level");
 
     @Override
     public void onRegisterGuiLayers(GuiLayersContext context) {
